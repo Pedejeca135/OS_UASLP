@@ -143,6 +143,7 @@ https://sites.google.com/site/osupaep2010/administracion-de-procesos/planificaci
 #### Direccion lógica:
 #### Direccion Física:
 #### ¿Qué es MMU(Memory Management Unit)?
+es el dispositivo que traduce direcciones virtuales a físicas.
 
 ### Tarea 3:
 
