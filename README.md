@@ -101,13 +101,13 @@ El planificador a largo plazo se ejecuta con relativa poca frecuencia, tomando u
 
 El planificador a corto plazo se ejecuta cuando ocurre un suceso que puede conducir a la interrupción del proceso actual o que ofrece la oportunidad de expulsar de la ejecución al proceso actual en favor de otro. Como ejemplos de estos sucesos se tienen:
 
--         Interrupciones del reloj.
+- Interrupciones del reloj.
 
--         Interrupciones de E/S.
+- Interrupciones de E/S.
 
--         Llamadas al sistema operativo.
+- Llamadas al sistema operativo.
 
--         Señales.
+- Señales.
 
 ##### Mediano Plazo:
 En los sistemas de multiprogramación y tiempo compartido varios procesos residen en la memoria principal. El tamaño limitado de ésta hace que el número de procesos que residen en ella sea finito. Puede ocurrir que todos los procesos en memoria estén bloqueados, desperdiciándose así la CPU. En algunos sistemas se intercambian procesos enteros (swap) entre memoria principal y memoria secundaria (normalmente discos), con esto se aumenta el número de procesos, y, por tanto, la probabilidad de una mayor utilización de la CPU.
@@ -140,6 +140,9 @@ https://es.wikipedia.org/wiki/Bloque_de_control_del_proceso
 https://lsi.vc.ehu.eus/pablogn/docencia/manuales/SO/TemasSOuJaen/PLANIFICACIONDEPROCESOS/1NivelesdePlanificacion.htm#planificador_lp
 https://sites.google.com/site/osupaep2010/administracion-de-procesos/planificacion-del-procesador/tipos-de-planificacion/planificacion-a-corto-plazo
 ### Tarea 2:
+#### Direccion lógica:
+#### Direccion Física:
+#### ¿Qué es MMU(Memory Management Unit)?
 
 ### Tarea 3:
 
