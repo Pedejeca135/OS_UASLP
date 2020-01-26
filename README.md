@@ -40,7 +40,7 @@ Esta lista es simplemente indicativa, cada sistema operativo tiene su propio dis
 
 #### Concurrencia:
 Esta palabra intuitivamente la entendemos como la confluencia o el encuentro de varias cosas o procesos en un sólo lugar al mismo tiempo. Cuando un lugar está lleno de gente decimos que “está muy concurrido”. Esto nos puede llevar a confundir el término con paralelismo. En cuanto a las ciencias computacionales, es algo totalmente diferente: es una manera de diseñar, componer o estructurar programas. Concurrencia, entonces, se puede definir de la siguiente forma:
-`La composición de elementos (funciones, procesos, programas, etc) que se ejecutan independientemente pero interactúan entre sí. No necesariamente se ejecutan al mismo tiempo.`
+La composición de elementos (funciones, procesos, programas, etc) que se ejecutan independientemente pero interactúan entre sí. No necesariamente se ejecutan al mismo tiempo.
 
 #### Paralelismo:
 Se refiere a la ejecución simultánea de varios procesos computacionales. Esto significa que se requieren varios medios de ejecución física: varios procesadores (o un procesador con varios núcleos) o varias computadoras (sistemas distribuidos) y la suficiente memoria para mantenerlos. Los procesos pueden estar relacionados entre ellos, para realizar una misma tarea, o no.
@@ -141,10 +141,12 @@ https://lsi.vc.ehu.eus/pablogn/docencia/manuales/SO/TemasSOuJaen/PLANIFICACIONDE
 https://sites.google.com/site/osupaep2010/administracion-de-procesos/planificacion-del-procesador/tipos-de-planificacion/planificacion-a-corto-plazo
 
 ### Tarea 2:
-#### Direccion lógica:
+#### Dirección lógica:
+Es la direción que genera la CPU para un proceso relativo en ejecución. Todos los programas epiezan en 0 en dirección lógica.
 #### Direccion Física:
+Es la dirección de acceso real a la memoria principal.
 #### ¿Qué es MMU(Memory Management Unit)?
-Es el dispositivo que traduce direcciones virtuales a físicas.
+Es el dispositivo que traduce direcciones virtuales a físicas. La dirección lógica es virtual ya que no existe físicamente. Por lo tanto, también se le llama o conoce como Dirección Virtual. Esta dirección se utiliza como referencia para acceder a la ubicación de la memoria física La dirección lógica se asigna a su dirección física correspondiente mediante un dispositivo de hardware o software llamado Unidad de gestión de memoria(MMU). 
 #### Cargador
 Programa de sistema que tiene la función de colocar un proceso en memoria. Puede
 soportar las características de carga dinámica o manejo de superposiciones.
@@ -171,6 +173,9 @@ en memoria hasta que termina su ejecución.
 - Si un segmento S está en memoria, deben de estar todos los segmentos de la
 trayectoria S a la raíz.
 - La estructura de un programa de sup
+
+#### Bibliografía
+https://pc-solucion.es/2018/04/17/direccion-logica/
 
 ### Tarea 3:
 
