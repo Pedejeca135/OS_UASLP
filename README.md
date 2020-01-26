@@ -139,11 +139,38 @@ https://es.wikipedia.org/wiki/Multitarea
 https://es.wikipedia.org/wiki/Bloque_de_control_del_proceso
 https://lsi.vc.ehu.eus/pablogn/docencia/manuales/SO/TemasSOuJaen/PLANIFICACIONDEPROCESOS/1NivelesdePlanificacion.htm#planificador_lp
 https://sites.google.com/site/osupaep2010/administracion-de-procesos/planificacion-del-procesador/tipos-de-planificacion/planificacion-a-corto-plazo
+
 ### Tarea 2:
 #### Direccion lógica:
 #### Direccion Física:
 #### ¿Qué es MMU(Memory Management Unit)?
-es el dispositivo que traduce direcciones virtuales a físicas.
+Es el dispositivo que traduce direcciones virtuales a físicas.
+#### Cargador
+Programa de sistema que tiene la función de colocar un proceso en memoria. Puede
+soportar las características de carga dinámica o manejo de superposiciones.
+#### Carga Dinámica
+- Una rutina no es cargada hasta que es llamada.
+- No requiere soporte del sistema operativo.
+- Es responsabilidad de los programadores diseñar sus programas para que se
+aproveche esta característica.
+- Los SO simplemente apoyan proporcionando bibliotecas para la carga dinámica.
+
+#### Superposiciones
+- Reduce la cantidad de memoria requerida durante la ejecución de un programa.
+- Consiste en mantener en memoria aquellas instrucciones y datos que se necesitan en
+un momento dado.
+- No requiere soporte del sistema operativo
+- Un programa con superposiciones es quel donde varios segmentos o módulos se
+sobreescriben o se superponen en memoria.
+- Se definen por el programador con estructuras de archivo sencillas.
+- Se requiere una estructura de árbol para describir las relaciones módulos ó rutinas
+de un programa.
+- Cada segmento puede constar de uno o varios segmentos o módulos.
+- El segmento raíz (o principal) se carga cuando comienza la ejecución y siempre está
+en memoria hasta que termina su ejecución.
+- Si un segmento S está en memoria, deben de estar todos los segmentos de la
+trayectoria S a la raíz.
+- La estructura de un programa de sup
 
 ### Tarea 3:
 
