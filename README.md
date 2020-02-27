@@ -1,20 +1,19 @@
 # PRACTICA 0
 
 
-## Parcial 1:
-### Tarea 1:
-Este es un repaso de las definiciones basicas de lo que se vio en "sistemas Operaivos A". Conceptos basicos para entender y poner en contexto el contenido de esta materia "sistemas operativos B".
+## 1.- Resumen:
 
-#### Proceso:
-Es una abstraccion de un programa en ejecución, incluye los valores que tienen el contador de programa, los registros y las variables.
+Para realizar esta práctica debemos tener conocimiento previo del funcionamiento y el código de nachos Estos abarcan las características de memoria de la arquitectura, la técnica de asignación de memoria, traducción de direcciones y como se prueba en administrador de memoria.
 
-#### Conmutacion de contexto:
-Es el hecho de cambiar el turno de procesamiento entre procesos, para ello primero el sistema tiene que interrumpir el proceso en ejecucion  y posteriormente :
-1. Guardar el estado del programa que se estaba ejecutando. El estado, también denominado contexto, consiste en los valores de todos los registros del microprocesador. Se copian en la memoria principal.
+## 2.- Instrucciones:
 
-2. Seleccionar otro programa para ejecutar. Entre todos los programas que estén preparados para ejecutarse, la rutina selecciona uno de ellos siguiendo algún algoritmo equitativo.
+Modificar el código de Nachos para que al ejecutar un programa realice lo siguiente (en el orden en que se especifica a continuación): 
+a) Mostrar en pantalla el tamaño del proceso en bytes (en decimal).
+b) Imprimir en pantalla la cantidad de páginas n que forman el proceso (que representan la cantidad de marcos que se requieren para su carga y ejecución).
+c) Imprimir el contenido de la tabla de páginas (índice, marco y bit de validez).
+d) Mostrar el mapeo de memoria conforme se vaya ejecutando el proceso. Con el siguiente formato:
+ Dirección Lógica        No. De Página(p)        Desplazamiento(d)        Dirección Física.
 
-3. Restaurar el estado del programa seleccionado. Para ello, se toma el estado previamente copiado en la memoria principal y se vuelca en los registros del microprocesador.
 
-4. Ejecutar el programa seleccionado La rutina termina su ejecución saltando a la instrucción que estaba pendiente de ejecutar en el programa seleccionado.
+
 
