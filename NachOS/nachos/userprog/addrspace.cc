@@ -73,7 +73,13 @@ AddrSpace::AddrSpace(OpenFile *executable)
 			+ UserStackSize;	// we need to increase the size
 						// to leave room for the stack
     numPages = divRoundUp(size, PageSize);
+
+    //imprimir el tamaño de proceso(Practica0).
+    printf("\nEl tamano del proceso es: %d bytes\n",size);
     size = numPages * PageSize;
+
+    //imrimir la cantidad de marcosw necesarios para el proceso(Practica0).
+    printf("\nLa cantidad de marcos que requiere para ejecutarse son: %d \n",numPages);
 
     ASSERT(numPages <= NumPhysPages);		// check we're not trying
 						// to run anything too big --
@@ -83,6 +89,8 @@ AddrSpace::AddrSpace(OpenFile *executable)
     DEBUG('a', "Initializing address space, num pages %d, size %d\n", 
 					numPages, size);
 // first, set up the translation 
+    //imprimir el esqueleto de la tabla(Practica0).
+    printf("Indice \t No. Marco \t Bit Validez\n");
     pageTable = new TranslationEntry[numPages];
     for (i = 0; i < numPages; i++) {
 	pageTable[i].virtualPage = i;	// for now, virtual page # = phys page #
@@ -93,8 +101,13 @@ AddrSpace::AddrSpace(OpenFile *executable)
 	pageTable[i].readOnly = FALSE;  // if the code segment was entirely on 
 					// a separate page, we could set its 
 					// pages to be read-only
+    //imprimir datos que se listan en el esqueleto de la tabla.(Practica0).
+    printf("%d              %d              %d \n",i,pageTable[i].physicalPage,pageTable[i].valid);
     }
-    
+    //imprimir (Practica0).
+    printf("\nMapeo de direcciones logicas\n");
+    printf("Dirección logica \t No.Pagina(p) \t Desplazamiento(d) \t Dirección Fisica\t\n");
+
 // zero out the entire address space, to zero the unitialized data segment 
 // and the stack segment
     bzero(machine->mainMemory, size);

@@ -33,6 +33,7 @@
 #include "machine.h"
 #include "addrspace.h"
 #include "system.h"
+#include "stdio.h"//para poder usar printf("");.
 
 // Routines for converting Words and Short Words to and from the
 // simulated machine's format of little endian.  These end up
@@ -249,6 +250,8 @@ Machine::Translate(int virtAddr, int* physAddr, int size, bool writing)
     if (writing)
 	entry->dirty = TRUE;
     *physAddr = pageFrame * PageSize + offset;
+    //agregado para imprimir datos(Practica0).
+    printf("\t  %d      \t      %d      \t      %d     \t       %d \t\n",virtAddr,pageFrame,offset,*physAddr);
     ASSERT((*physAddr >= 0) && ((*physAddr + size) <= MemorySize));
     DEBUG('a', "phys addr = 0x%x\n", *physAddr);
     return NoException;
