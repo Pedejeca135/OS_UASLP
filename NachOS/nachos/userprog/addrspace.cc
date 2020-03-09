@@ -65,11 +65,13 @@ AddrSpace::AddrSpace(OpenFile *executable)
     /*
     para la creacion del archivo nuevo:
 
-    OpenFile* openFile;
+    //OpenFile* openFile;
+
+    OpenFile archivoSwapOpen;
     int amountRead, fileLength;
     char *buffer;
 
-// check if the executable can open
+// checa si el ejecutable se puede abrir
     if ((fp = fopen(from, "r")) == NULL) {   
     printf("Copy: couldn't open input file %s\n", from);
     return;
