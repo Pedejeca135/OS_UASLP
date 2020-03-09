@@ -62,7 +62,46 @@ AddrSpace::AddrSpace(OpenFile *executable)
     NoffHeader noffH;
     unsigned int i, size;
 
+    /*
+    para la creacion del archivo nuevo:
+
+    OpenFile* openFile;
+    int amountRead, fileLength;
+    char *buffer;
+
+// check if the executable can open
+    if ((fp = fopen(from, "r")) == NULL) {   
+    printf("Copy: couldn't open input file %s\n", from);
+    return;
+    }
+
+// Figure out length of exec file     
+    fileLength = ftell(fp);
+
+// Create a Nachos file of the same length
+    DEBUG('f', "Copying file %s, size %d, to file %s\n", from, fileLength, to);
+    if (!fileSystem->Create(to, fileLength)) {   // Create Nachos file
+    printf("Copy: couldn't create output file %s\n", to);
+    fclose(fp);
+    return;
+    }
+    
+    openFile = fileSystem->Open(to);
+    ASSERT(openFile != NULL);
+    
+// Copy the data in TransferSize chunks
+    buffer = new char[TransferSize];
+    while ((amountRead = fread(buffer, sizeof(char), TransferSize, fp)) > 0)
+    openFile->Write(buffer, amountRead);    
+    delete [] buffer;
+
+// Close the UNIX and the Nachos files
+    delete openFile;
+    fclose(fp);
+    */
+
     executable->ReadAt((char *)&noffH, sizeof(noffH), 0);
+
     if ((noffH.noffMagic != NOFFMAGIC) && 
 		(WordToHost(noffH.noffMagic) == NOFFMAGIC))
     	SwapHeader(&noffH);

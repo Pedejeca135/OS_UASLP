@@ -40,11 +40,11 @@
 // being NOPs when the host machine is also little endian (DEC and Intel).
 
 unsigned int
-WordToHost(unsigned int word) {
+WordToHost(unsigned int word) {//el entero tiene 4 bytes
 #ifdef HOST_IS_BIG_ENDIAN
 	 register unsigned long result;
-	 result = (word >> 24) & 0x000000ff;
-	 result |= (word >> 8) & 0x0000ff00;
+	 result = (word >> 24) & 0x000000ff;/*<< y >> para recorrer*/
+	 result |= (word >> 8) & 0x0000ff00;/*or o igual -> . a |= b es lo mismo que a = a | b*/
 	 result |= (word << 8) & 0x00ff0000;
 	 result |= (word << 24) & 0xff000000;
 	 return result;
