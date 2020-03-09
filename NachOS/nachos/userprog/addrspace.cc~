@@ -57,7 +57,7 @@ AddrSpace::AddrSpace(OpenFile *executable, char* nombreExecutable)
     //int amountRead, fileLength;
     int swapFileLength;
     //elnombre del archivo swap cn extension
-    char *swapNombreExecutable = strcat( nombreExecutable + ".swp");
+    char *swapNombreExecutable = nombreExecutable + ".swp";
 
 
     
@@ -93,13 +93,7 @@ AddrSpace::AddrSpace(OpenFile *executable, char* nombreExecutable)
     }
     else{//todo chill y si se creo el archivo.
         archivoSwapOpen = fileSystem->Open(swapNombreExecutable);
-        ASSERT(archivoSwapOpen != NULL);
-	
-	if(archivoSwapOpen != NULL)
-	{
-		archivoSwapOpen->Write(bufferDeArchivoSwap, swapFileLength);
-		
-	
+        ASSERT(openFile != NULL);
 
         /* a tomar en cuenta lo que se encuentra en el archivo noff.h:
         
@@ -121,7 +115,11 @@ typedef struct noffHeader {
                  * should be zero'ed before use 
                  
 } NoffHeader;
-*/  
+*/
+
+        buffer = new char[TransferSize];
+        while ((amountRead = fread(buffer, sizeof(char), TransferSize, fp)) > 0)
+        openFile->Write(buffer, amountRead);  
     
     }
    
