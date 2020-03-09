@@ -42,54 +42,26 @@ SwapHeader (NoffHeader *noffH)
 	noffH->uninitData.inFileAddr = WordToHost(noffH->uninitData.inFileAddr);
 }
 
-//----------------------------------------------------------------------
-// AddrSpace::AddrSpace
-// 	Create an address space to run a user program.
-//	Load the program from a file "executable", and set everything
-//	up so that we can start executing user instructions.
-//
-//	Assumes that the object code file is in NOFF format.
-//
-//	First, set up the translation from program memory to physical 
-//	memory.  For now, this is really simple (1:1), since we are
-//	only uniprogramming, and we have a single unsegmented page table
-//
-//	"executable" is the file containing the object code to load into memory
-//----------------------------------------------------------------------
-
-AddrSpace::AddrSpace(OpenFile *executable)
+//AddrSpace Class constructor para escribir swap
+AddrSpace::AddrSpace(OpenFile *executable, char* nombreExecutable)
 {
     NoffHeader noffH;
+
+    //agregado para la practica1:
+    NoffHeader bufferDeArchivoSwap;
+    //OpenFile* openFile;
+    OpenFile* archivoSwapOpen;
+    //int amountRead, fileLength;
+    int swapFileLength;
+
+
     unsigned int i, size;
 
     /*
     para la creacion del archivo nuevo:
 
-    //OpenFile* openFile;
-
-    OpenFile archivoSwapOpen;
-    int amountRead, fileLength;
-    char *buffer;
-
-// checa si el ejecutable se puede abrir
-    if ((fp = fopen(from, "r")) == NULL) {   
-    printf("Copy: couldn't open input file %s\n", from);
-    return;
-    }
-
-// Figure out length of exec file     
-    fileLength = ftell(fp);
-
-// Create a Nachos file of the same length
-    DEBUG('f', "Copying file %s, size %d, to file %s\n", from, fileLength, to);
-    if (!fileSystem->Create(to, fileLength)) {   // Create Nachos file
-    printf("Copy: couldn't create output file %s\n", to);
-    fclose(fp);
-    return;
-    }
     
-    openFile = fileSystem->Open(to);
-    ASSERT(openFile != NULL);
+    
     
 // Copy the data in TransferSize chunks
     buffer = new char[TransferSize];
@@ -104,15 +76,37 @@ AddrSpace::AddrSpace(OpenFile *executable)
 
     executable->ReadAt((char *)&noffH, sizeof(noffH), 0);
 
+
+
+    //agregado para la practica1:
+    swapFileLength = executable->ReadAt((char *)&bufferDeArchivoSwap, sizeof(noffH), 40);
+    // Crear un nuevo archivo de nachos (practica1).
+    if (!fileSystem->Create(nombreExecutable, swapFileLength)) 
+    {   // Create Nachos file
+    printf("No se pudo crear el archivo swap%s\n", nombreExecutable);
+    //return;
+    }
+    else{
+        archivoSwapOpen = fileSystem->Open(nombreExecutable);
+    ASSERT(openFile != NULL);
+    }
+    buffer = new char[TransferSize];
+    while ((amountRead = fread(buffer, sizeof(char), TransferSize, fp)) > 0)
+    openFile->Write(buffer, amountRead);  
+    
+
+
+
+
     if ((noffH.noffMagic != NOFFMAGIC) && 
-		(WordToHost(noffH.noffMagic) == NOFFMAGIC))
-    	SwapHeader(&noffH);
+        (WordToHost(noffH.noffMagic) == NOFFMAGIC))
+        SwapHeader(&noffH);
     ASSERT(noffH.noffMagic == NOFFMAGIC);
 
 // how big is address space?
     size = noffH.code.size + noffH.initData.size + noffH.uninitData.size 
-			+ UserStackSize;	// we need to increase the size
-						// to leave room for the stack
+            + UserStackSize;    // we need to increase the size
+                        // to leave room for the stack
     numPages = divRoundUp(size, PageSize);
 
     //imprimir el tamaño de proceso(Practica0).
@@ -122,26 +116,26 @@ AddrSpace::AddrSpace(OpenFile *executable)
     //imrimir la cantidad de marcosw necesarios para el proceso(Practica0).
     printf("\nLa cantidad de marcos que requiere para ejecutarse son: %d \n",numPages);
 
-    ASSERT(numPages <= NumPhysPages);		// check we're not trying
-						// to run anything too big --
-						// at least until we have
-						// virtual memory
+    ASSERT(numPages <= NumPhysPages);       // check we're not trying
+                        // to run anything too big --
+                        // at least until we have
+                        // virtual memory
 
     DEBUG('a', "Initializing address space, num pages %d, size %d\n", 
-					numPages, size);
+                    numPages, size);
 // first, set up the translation 
     //imprimir el esqueleto de la tabla(Practica0).
     printf("Indice \t No. Marco \t Bit Validez\n");
     pageTable = new TranslationEntry[numPages];
     for (i = 0; i < numPages; i++) {
-	pageTable[i].virtualPage = i;	// for now, virtual page # = phys page #
-	pageTable[i].physicalPage = i;
-	pageTable[i].valid = TRUE;
-	pageTable[i].use = FALSE;
-	pageTable[i].dirty = FALSE;
-	pageTable[i].readOnly = FALSE;  // if the code segment was entirely on 
-					// a separate page, we could set its 
-					// pages to be read-only
+    pageTable[i].virtualPage = i;   // for now, virtual page # = phys page #
+    pageTable[i].physicalPage = i;
+    pageTable[i].valid = TRUE;
+    pageTable[i].use = FALSE;
+    pageTable[i].dirty = FALSE;
+    pageTable[i].readOnly = FALSE;  // if the code segment was entirely on 
+                    // a separate page, we could set its 
+                    // pages to be read-only
     //imprimir datos que se listan en el esqueleto de la tabla.(Practica0).
     printf("%d              %d              %d \n",i,pageTable[i].physicalPage,pageTable[i].valid);
     }
@@ -156,15 +150,103 @@ AddrSpace::AddrSpace(OpenFile *executable)
 // then, copy in the code and data segments into memory
     if (noffH.code.size > 0) {
         DEBUG('a', "Initializing code segment, at 0x%x, size %d\n", 
-			noffH.code.virtualAddr, noffH.code.size);
+            noffH.code.virtualAddr, noffH.code.size);
         executable->ReadAt(&(machine->mainMemory[noffH.code.virtualAddr]),
-			noffH.code.size, noffH.code.inFileAddr);
+            noffH.code.size, noffH.code.inFileAddr);
     }
     if (noffH.initData.size > 0) {
         DEBUG('a', "Initializing data segment, at 0x%x, size %d\n", 
-			noffH.initData.virtualAddr, noffH.initData.size);
+            noffH.initData.virtualAddr, noffH.initData.size);
         executable->ReadAt(&(machine->mainMemory[noffH.initData.virtualAddr]),
-			noffH.initData.size, noffH.initData.inFileAddr);
+            noffH.initData.size, noffH.initData.inFileAddr);
+    }
+
+}
+
+
+
+//----------------------------------------------------------------------
+// AddrSpace::AddrSpace
+//  Create an address space to run a user program.
+//  Load the program from a file "executable", and set everything
+//  up so that we can start executing user instructions.
+//
+//  Assumes that the object code file is in NOFF format.
+//
+//  First, set up the translation from program memory to physical 
+//  memory.  For now, this is really simple (1:1), since we are
+//  only uniprogramming, and we have a single unsegmented page table
+//
+//  "executable" is the file containing the object code to load into memory
+//----------------------------------------------------------------------
+
+AddrSpace::AddrSpace(OpenFile *executable)
+{
+    NoffHeader noffH;
+    unsigned int i, size;
+
+    executable->ReadAt((char *)&noffH, sizeof(noffH), 0);
+    if ((noffH.noffMagic != NOFFMAGIC) && 
+        (WordToHost(noffH.noffMagic) == NOFFMAGIC))
+        SwapHeader(&noffH);
+    ASSERT(noffH.noffMagic == NOFFMAGIC);
+
+// how big is address space?
+    size = noffH.code.size + noffH.initData.size + noffH.uninitData.size 
+            + UserStackSize;    // we need to increase the size
+                        // to leave room for the stack
+    numPages = divRoundUp(size, PageSize);
+
+    //imprimir el tamaño de proceso(Practica0).
+    printf("\nEl tamano del proceso es: %d bytes\n",size);
+    size = numPages * PageSize;
+
+    //imrimir la cantidad de marcosw necesarios para el proceso(Practica0).
+    printf("\nLa cantidad de marcos que requiere para ejecutarse son: %d \n",numPages);
+
+    ASSERT(numPages <= NumPhysPages);       // check we're not trying
+                        // to run anything too big --
+                        // at least until we have
+                        // virtual memory
+
+    DEBUG('a', "Initializing address space, num pages %d, size %d\n", 
+                    numPages, size);
+// first, set up the translation 
+    //imprimir el esqueleto de la tabla(Practica0).
+    printf("Indice \t No. Marco \t Bit Validez\n");
+    pageTable = new TranslationEntry[numPages];
+    for (i = 0; i < numPages; i++) {
+    pageTable[i].virtualPage = i;   // for now, virtual page # = phys page #
+    pageTable[i].physicalPage = i;
+    pageTable[i].valid = TRUE;
+    pageTable[i].use = FALSE;
+    pageTable[i].dirty = FALSE;
+    pageTable[i].readOnly = FALSE;  // if the code segment was entirely on 
+                    // a separate page, we could set its 
+                    // pages to be read-only
+    //imprimir datos que se listan en el esqueleto de la tabla.(Practica0).
+    printf("%d              %d              %d \n",i,pageTable[i].physicalPage,pageTable[i].valid);
+    }
+    //imprimir (Practica0).
+    printf("\nMapeo de direcciones logicas\n");
+    printf("Dirección logica \t No.Pagina(p) \t Desplazamiento(d) \t Dirección Fisica\t\n");
+
+// zero out the entire address space, to zero the unitialized data segment 
+// and the stack segment
+    bzero(machine->mainMemory, size);
+
+// then, copy in the code and data segments into memory
+    if (noffH.code.size > 0) {
+        DEBUG('a', "Initializing code segment, at 0x%x, size %d\n", 
+            noffH.code.virtualAddr, noffH.code.size);
+        executable->ReadAt(&(machine->mainMemory[noffH.code.virtualAddr]),
+            noffH.code.size, noffH.code.inFileAddr);
+    }
+    if (noffH.initData.size > 0) {
+        DEBUG('a', "Initializing data segment, at 0x%x, size %d\n", 
+            noffH.initData.virtualAddr, noffH.initData.size);
+        executable->ReadAt(&(machine->mainMemory[noffH.initData.virtualAddr]),
+            noffH.initData.size, noffH.initData.inFileAddr);
     }
 
 }
