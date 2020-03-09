@@ -140,6 +140,18 @@ OpenFile::ReadAt(char *into, int numBytes, int position)
     return numBytes;
 }
 
+/*
+de donde se  se manda a hablar mas arriba(Practica1).
+
+int
+OpenFile::Write(char *into, int numBytes)
+{
+   int result = WriteAt(into, numBytes, seekPosition);
+   seekPosition += result;
+   return result;
+}
+*/
+
 int
 OpenFile::WriteAt(char *from, int numBytes, int position)
 {

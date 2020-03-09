@@ -46,6 +46,9 @@ SwapHeader (NoffHeader *noffH)
 AddrSpace::AddrSpace(OpenFile *executable, char* nombreExecutable)
 {
     NoffHeader noffH;
+    unsigned int i, size;
+
+
 
     //agregado para la practica1:
     NoffHeader bufferDeArchivoSwap;
@@ -53,9 +56,11 @@ AddrSpace::AddrSpace(OpenFile *executable, char* nombreExecutable)
     OpenFile* archivoSwapOpen;
     //int amountRead, fileLength;
     int swapFileLength;
+    //elnombre del archivo swap cn extension
+    char *swapNombreExecutable = nombreExecutable + ".swp";
 
 
-    unsigned int i, size;
+    
 
     /*
     para la creacion del archivo nuevo:
@@ -79,21 +84,45 @@ AddrSpace::AddrSpace(OpenFile *executable, char* nombreExecutable)
 
 
     //agregado para la practica1:
-    swapFileLength = executable->ReadAt((char *)&bufferDeArchivoSwap, sizeof(noffH), 40);
+    swapFileLength = executable->ReadAt((char *)&bufferDeArchivoSwap, sizeof(bufferDeArchivoSwap), 40);
     // Crear un nuevo archivo de nachos (practica1).
-    if (!fileSystem->Create(nombreExecutable, swapFileLength)) 
+    if (!fileSystem->Create(swapNombreExecutable, swapFileLength)) 
     {   // Create Nachos file
-    printf("No se pudo crear el archivo swap%s\n", nombreExecutable);
+    printf("No se pudo crear el archivo swap%s\n", swapNombreExecutable);
     //return;
     }
-    else{
-        archivoSwapOpen = fileSystem->Open(nombreExecutable);
-    ASSERT(openFile != NULL);
-    }
-    buffer = new char[TransferSize];
-    while ((amountRead = fread(buffer, sizeof(char), TransferSize, fp)) > 0)
-    openFile->Write(buffer, amountRead);  
+    else{//todo chill y si se creo el archivo.
+        archivoSwapOpen = fileSystem->Open(swapNombreExecutable);
+        ASSERT(openFile != NULL);
+
+        /* a tomar en cuenta lo que se encuentra en el archivo noff.h:
+        
+        #define NOFFMAGIC   0xbadfad    /* magic number denoting Nachos 
+                     * object code file 
+                     
+
+typedef struct segment {
+  int virtualAddr;      /* location of segment in virt addr space 
+  int inFileAddr;       /* location of segment in this file 
+  int size;         /* size of segment 
+} Segment;
+
+typedef struct noffHeader {
+   int noffMagic;       /* should be NOFFMAGIC 
+   Segment code;        /* executable code segment 
+   Segment initData;        /* initialized data segment 
+   Segment uninitData;      /* uninitialized data segment --
+                 * should be zero'ed before use 
+                 
+} NoffHeader;
+*/
+
+        buffer = new char[TransferSize];
+        while ((amountRead = fread(buffer, sizeof(char), TransferSize, fp)) > 0)
+        openFile->Write(buffer, amountRead);  
     
+    }
+   
 
 
 
