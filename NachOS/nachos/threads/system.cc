@@ -21,11 +21,22 @@ Timer *timer;				// the hardware timer device,
 
 #ifdef FILESYS_NEEDED
 FileSystem  *fileSystem;
+//añadido en la practica1:-------
+OpenFile *swapOpenFile;
+//-------------------------------
 #endif
 
 #ifdef FILESYS
 SynchDisk   *synchDisk;
 #endif
+
+/*
+//añadido en la practica1.-------------------------------------------
+#ifdef SWPFILE
+OpenFile *swapOpenFile;
+#endif
+//-------------------------------------------------------------------
+*/
 
 #ifdef USER_PROGRAM	// requires either FILESYS or FILESYS_STUB
 Machine *machine;	// user program memory and registers

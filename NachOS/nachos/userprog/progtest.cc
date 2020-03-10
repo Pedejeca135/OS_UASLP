@@ -30,6 +30,25 @@ StartProcess(char *filename)
 	printf("Unable to open file %s\n", filename);
 	return;
     }
+
+    //Añadido practica1(BEGIN):-------------------------------------------------------------------------------------------------------------------
+
+    if(!fileSystem->Create(strcat(filename,".swp"),executable->Length()-40))//crea el archivo y comprueba que efectivamente se haya creado.
+    {
+        printf("No se pudo crear el archivo\n");
+    }
+    else
+    {
+
+        printf("archivo %s creado. \n",filename);
+        swapOpenFile = fileSystem->Open(filename);
+    }
+
+    //Añadido practica1(END):-----------------------------------------------------------------------------------------------------------------------
+
+
+
+
     space = new AddrSpace(executable);    
     currentThread->space = space;
 

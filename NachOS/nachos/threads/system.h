@@ -37,12 +37,24 @@ extern Machine* machine;	// user program memory and registers
 #ifdef FILESYS_NEEDED 		// FILESYS or FILESYS_STUB 
 #include "filesys.h"
 extern FileSystem  *fileSystem;
+//añadido en Practica1:-----------------------------
+extern OpenFile *swapOpenFile;
+//--------------------------------------------------
 #endif
 
 #ifdef FILESYS
 #include "synchdisk.h"
 extern SynchDisk   *synchDisk;
 #endif
+
+/*
+//añadido en la practica1.------------------------------------------------------------------------
+#ifdef SWPFILE
+//#include "filesys.h"
+extern OpenFile *swapOpenFile;
+#endif
+//-------------------------------------------------------------------------------------------------
+*/
 
 #ifdef NETWORK
 #include "post.h"
