@@ -10,6 +10,14 @@
 // All rights reserved.  See copyright.h for copyright notice and limitation 
 // of liability and disclaimer of warranty provisions.
 
+/**********************************************
+Practica 1.
+Integrantes:
+* Cantú Olivares Pedro de Jesús.
+* Puente Villanueva Juan Arturo.
+* Silva David.
+***********************************************/
+
 #ifndef ADDRSPACE_H
 #define ADDRSPACE_H
 

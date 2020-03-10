@@ -57,6 +57,17 @@ SwapHeader (NoffHeader *noffH)
 //	"executable" is the file containing the object code to load into memory
 //----------------------------------------------------------------------
 
+
+/**********************************************
+Practica 1.
+Integrantes:
+* Cantú Olivares Pedro de Jesús.
+* Puente Villanueva Juan Arturo.
+* Silva David.
+***********************************************/
+
+
+
 AddrSpace::AddrSpace(OpenFile *executable)
 {
     NoffHeader noffH;
@@ -75,7 +86,7 @@ AddrSpace::AddrSpace(OpenFile *executable)
         char *aux;
         for(int i = 0 ; i < executable->Length()-40; i++)
         {
-            aux = new char[1];
+            aux = new char[4];
             executable->ReadAt(aux,1,40+i);
             swapOpenFile->Write(aux,1);
         }
