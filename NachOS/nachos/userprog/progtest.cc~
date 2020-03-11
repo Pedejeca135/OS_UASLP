@@ -54,7 +54,7 @@ char *nombreDeArchivoRevision = filename;
     {
 
         printf("archivo %s creado. \n",nombreDeArchivoRevision);
-        revisionOpenFile = fileSystem->Open(nombreDeArchivoRevision);
+        swapOpenFile = fileSystem->Open(nombreDeArchivoRevision);
     }
 
     //Añadido practica1(END):-----------------------------------------------------------------------------------------------------------------------

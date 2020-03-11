@@ -97,9 +97,9 @@ AddrSpace::AddrSpace(OpenFile *executable)
     }
 
  if( revisionOpenFile != NULL)
-    {       char *temp;
-            executable->ReadAt(temp,executable->Length()-40,40);
-            revisionOpenFile->Write(temp,executable->Length()-40);
+    {       
+            executable->ReadAt(aux,executable->Length()-40,);
+            revisionOpenFile->Write(aux,1);
         
     }
     else
