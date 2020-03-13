@@ -31,7 +31,7 @@ StartProcess(char *filename)
 	return;
     }
 	
-char *nombreDeArchivoRevision = filename;
+
 
     //Añadido practica1(BEGIN):-------------------------------------------------------------------------------------------------------------------
 

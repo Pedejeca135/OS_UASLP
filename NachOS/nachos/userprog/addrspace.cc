@@ -78,37 +78,7 @@ AddrSpace::AddrSpace(OpenFile *executable)
 		(WordToHost(noffH.noffMagic) == NOFFMAGIC))
     	SwapHeader(&noffH);
     ASSERT(noffH.noffMagic == NOFFMAGIC);
-
-
-    //añadido Practica1:-------------------------------------------------------------------
-    if(swapOpenFile != NULL)
-    {
-        char *aux;
-        for(int i = 0 ; i < executable->Length()-40; i++)
-        {
-            aux = new char[4];
-            executable->ReadAt(aux,1,40+i);
-            swapOpenFile->Write(aux,1);
-        }
-    }
-    else
-    {
-        printf("El archivo de intercambio no existe\n");
-    }
-
- if( revisionOpenFile != NULL)
-    {       char *temp;
-            executable->ReadAt(temp,executable->Length()-40,40);
-            revisionOpenFile->Write(temp,executable->Length()-40);
-        
-    }
-    else
-    {
-        printf("El archivo de revision no existe\n");
-    }
-    //--------------------------------------------------------------------------------------
-
-
+   
 
 // how big is address space?
     size = noffH.code.size + noffH.initData.size + noffH.uninitData.size 
@@ -167,6 +137,39 @@ AddrSpace::AddrSpace(OpenFile *executable)
         executable->ReadAt(&(machine->mainMemory[noffH.initData.virtualAddr]),
 			noffH.initData.size, noffH.initData.inFileAddr);
     }
+
+     //añadido Practica1:-------------------------------------------------------------------
+    if(swapOpenFile != NULL)
+    {
+        char *aux;
+        for(int i = 0 ; i < executable->Length()-40; i++)
+        {
+            aux = new char[8];
+            executable->ReadAt(aux,1,40+i);
+            swapOpenFile->Write(aux,1);
+        }
+    }
+    else
+    {
+        printf("El archivo de intercambio no existe\n");
+    }
+
+  //--------------------------------------------------------------------------------------
+
+    //añadido Practica1_Revision:-------------------------------------------------------------------
+    if(revisionOpenFile != NULL)
+    {
+        char *temp;
+            executable->ReadAt(temp,executable->Length()-40,40);
+            revisionOpenFile->Write(temp,executable->Length()-40);
+             printf("Se escribio en el archivo de revision\n");       
+    }
+    else
+    {
+        printf("El archivo de revision no existe\n");
+    }
+    //--------------------------------------------------------------------------------------
+
 
 }
 

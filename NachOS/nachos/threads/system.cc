@@ -23,6 +23,8 @@ Timer *timer;				// the hardware timer device,
 FileSystem  *fileSystem;
 //añadido en la practica1:-------
 OpenFile *swapOpenFile;
+//-------------------------------
+//añadido en la practica1_Revision:-------
 OpenFile *revisionOpenFile;
 //-------------------------------
 #endif

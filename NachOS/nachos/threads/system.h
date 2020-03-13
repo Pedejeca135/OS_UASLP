@@ -40,7 +40,10 @@ extern FileSystem  *fileSystem;
 //añadido en Practica1:-----------------------------
 extern OpenFile *swapOpenFile;
 //--------------------------------------------------
+//añadido en Practica1_Revision-----------------------------
 extern OpenFile *revisionOpenFile;
+//--------------------------------------------------
+
 #endif
 
 #ifdef FILESYS
