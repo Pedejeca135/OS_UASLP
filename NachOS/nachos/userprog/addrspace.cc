@@ -84,12 +84,9 @@ AddrSpace::AddrSpace(OpenFile *executable)
     if(swapOpenFile != NULL)
     {
         char *aux;
-        for(int i = 0 ; i < executable->Length()-40; i++)
-        {
-            aux = new char[4];
-            executable->ReadAt(aux,1,40+i);
-            swapOpenFile->Write(aux,1);
-        }
+            //aux = new char[4];
+            executable->ReadAt(aux,executable->Length()-40,40);
+            swapOpenFile->Write(aux,executable->Length()-40);
     }
     else
     {
