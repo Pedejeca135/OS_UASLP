@@ -143,7 +143,7 @@ por demanda pura(se comento el ASSERT()*/
     }
     //imprimir (Practica0).
     printf("\nMapeo de direcciones logicas\n");
-    printf("Dirección logica \t No.Pagina(p) \t Desplazamiento(d) \t Dirección Fisica\t\n");
+    printf("Dirección logica \t No.Marco(p) \t Desplazamiento(d) \t Dirección Fisica\t\n");
 
 // zero out the entire address space, to zero the unitialized data segment 
 // and the stack segment
