@@ -59,7 +59,7 @@ ExceptionHandler(ExceptionType which)
     } else {
     	if(which == PageFaultException)
     	{
-
+    		machine->Run();
     	}
     	else
     	{

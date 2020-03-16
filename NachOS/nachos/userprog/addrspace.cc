@@ -87,7 +87,7 @@ AddrSpace::AddrSpace(OpenFile *executable)
             aux = new char[executable->Length()-40];
             executable->ReadAt(aux,executable->Length()-40,40);
             swapOpenFile->Write(aux,executable->Length()-40);
-            delete swapOpenFile;
+            //delete swapOpenFile;
         
     }
     else
@@ -229,4 +229,28 @@ void AddrSpace::RestoreState()
 {
     machine->pageTable = pageTable;
     machine->pageTableSize = numPages;
+}
+
+
+//void AddrSpace :: swapIn(char *into, int numBytes, int position)
+void AddrSpace :: swapIn(int vpn)
+{
+    // Abrir swapFile
+        // swapFile = fileSystem->Open("../test/sort.swp");
+    if(swapOpenFile != NULL)
+    {
+
+        swapOpenFile->ReadAt(&(machine->mainMemory[stats->numPageFaults*PageSize]),PageSize,vpn*PageSize);
+    }
+    else
+        printf("algo fue mal, el archivo de intercambio no existe \n");
+
+       
+}
+
+//no necesaria aun, puesto que el archivo de intercambio almacena todo el proceso
+//y el swap in solo lee la parte que requiere con la formula pertinente.
+void AddrSpace:: swapOut()
+{
+
 }

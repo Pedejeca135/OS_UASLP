@@ -214,10 +214,22 @@ Machine::Translate(int virtAddr, int* physAddr, int size, bool writing)
 	    DEBUG('a', "virtual page # %d too large for page table size %d!\n", 
 			virtAddr, pageTableSize);
 	    return AddressErrorException;
-	} else if (!pageTable[vpn].valid) {
+	} else if (!pageTable[vpn].valid) 
+
+    {
 	    DEBUG('a', "virtual page # %d too large for page table size %d!\n", 
 			virtAddr, pageTableSize);
         printf("Fallo # %d\n", stats->numPageFaults + 1);
+
+//swapFile->ReadAt(&(machine->mainMemory[numFrames*PageSize]),PageSize,vpn*PageSize);
+        //currentThread->space->swapIn(&(machine->mainMemory[numFrames*PageSize]),PageSize,vpn*PageSize);
+        currentThread->space->swapIn(vpn);
+         
+            // Validar la página
+        pageTable[vpn].valid = TRUE;
+        //pageTable[vpn].physicalPage = numFrames;
+        
+
         stats->numPageFaults++;
         pageTable[vpn].valid = TRUE;
 
