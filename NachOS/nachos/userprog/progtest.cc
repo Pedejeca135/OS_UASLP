@@ -54,6 +54,7 @@ StartProcess(char *filename)
     space->InitRegisters();		// set the initial register values
     space->RestoreState();		// load page table register
 
+    printf("\tDir.Logica\tNo.Pagina\tDesplaza\tDir.Física\n");
     machine->Run();			// jump to the user progam
     ASSERT(FALSE);			// machine->Run never returns;
 					// the address space exits

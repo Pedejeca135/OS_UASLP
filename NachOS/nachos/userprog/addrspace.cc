@@ -87,6 +87,7 @@ AddrSpace::AddrSpace(OpenFile *executable)
             aux = new char[executable->Length()-40];
             executable->ReadAt(aux,executable->Length()-40,40);
             swapOpenFile->Write(aux,executable->Length()-40);
+            //printf("El aux lleva: %s\n", aux );
             //delete swapOpenFile;
         
     }
@@ -129,7 +130,7 @@ por demanda pura(se comento el ASSERT()*/
     pageTable = new TranslationEntry[NumPhysPages];
     for (i = 0; i < numPages; i++) {
 	pageTable[i].virtualPage = i;	// for now, virtual page # = phys page #
-	pageTable[i].physicalPage = i;
+	//pageTable[i].physicalPage = i;
 	//pageTable[i].valid = TRUE;
     pageTable[i].valid = FALSE;
 	pageTable[i].use = FALSE;
@@ -235,10 +236,14 @@ void AddrSpace::RestoreState()
 //void AddrSpace :: swapIn(char *into, int numBytes, int position)
 void AddrSpace :: swapIn(int vpn)
 {
+    printf("Entro al SwapIn la vpn : %d \n",vpn);
     // Abrir swapFile
         // swapFile = fileSystem->Open("../test/sort.swp");
     if(swapOpenFile != NULL)
     {
+        char *buffer = new char[PageSize];
+        swapOpenFile->ReadAt(buffer,PageSize,vpn*PageSize);
+        printf("buffer: %s\n",buffer );
 
         swapOpenFile->ReadAt(&(machine->mainMemory[stats->numPageFaults*PageSize]),PageSize,vpn*PageSize);
     }

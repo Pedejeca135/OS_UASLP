@@ -206,8 +206,13 @@ Machine::Translate(int virtAddr, int* physAddr, int size, bool writing)
 
 // calculate the virtual page number, and offset within the page,
 // from the virtual address
+    printf("direccion virtual: %d\n",virtAddr );
+    printf("tamaño de pagina: %d\n",PageSize );
     vpn = (unsigned) virtAddr / PageSize;
+    printf("vpn calculado %d\n",vpn);
     offset = (unsigned) virtAddr % PageSize;
+    printf("ofset calculado%d\n",offset);
+
     
     if (tlb == NULL) {		// => page table => vpn is index into table
 	if (vpn >= pageTableSize) {
@@ -225,13 +230,15 @@ Machine::Translate(int virtAddr, int* physAddr, int size, bool writing)
         //currentThread->space->swapIn(&(machine->mainMemory[numFrames*PageSize]),PageSize,vpn*PageSize);
         currentThread->space->swapIn(vpn);
          
+         //asignar un marco a la pagina:
+        pageTable[vpn].physicalPage = stats->numPageFaults;
             // Validar la página
         pageTable[vpn].valid = TRUE;
         //pageTable[vpn].physicalPage = numFrames;
         
 
         stats->numPageFaults++;
-        pageTable[vpn].valid = TRUE;
+        
 
 	    return PageFaultException;
 	}
