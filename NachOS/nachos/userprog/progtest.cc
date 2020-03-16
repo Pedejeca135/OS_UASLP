@@ -46,9 +46,6 @@ StartProcess(char *filename)
 
     //Añadido practica1(END):-----------------------------------------------------------------------------------------------------------------------
 
-
-
-
     space = new AddrSpace(executable);    
     currentThread->space = space;
 

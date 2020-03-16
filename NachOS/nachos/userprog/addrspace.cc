@@ -84,9 +84,11 @@ AddrSpace::AddrSpace(OpenFile *executable)
     if(swapOpenFile != NULL)
     {
         char *aux;
-            //aux = new char[4];
+            aux = new char[executable->Length()-40];
             executable->ReadAt(aux,executable->Length()-40,40);
             swapOpenFile->Write(aux,executable->Length()-40);
+            delete swapOpenFile;
+        
     }
     else
     {
@@ -109,7 +111,10 @@ AddrSpace::AddrSpace(OpenFile *executable)
     //imrimir la cantidad de marcosw necesarios para el proceso(Practica0).
     printf("\nLa cantidad de marcos que requiere para ejecutarse son: %d \n",numPages);
 
-    ASSERT(numPages <= NumPhysPages);		// check we're not trying
+/* Practica 2: No se necesita checar que el numero de paginas
+sea menor o igual a le de los marcos puesto que es paginacion
+por demanda pura(se comento el ASSERT()*/
+    //ASSERT(numPages <= NumPhysPages);		// check we're not trying
 						// to run anything too big --
 						// at least until we have
 						// virtual memory
@@ -119,11 +124,14 @@ AddrSpace::AddrSpace(OpenFile *executable)
 // first, set up the translation 
     //imprimir el esqueleto de la tabla(Practica0).
     printf("Indice \t No. Marco \t Bit Validez\n");
-    pageTable = new TranslationEntry[numPages];
+    
+    //pageTable = new TranslationEntry[numPages]; //comentado para la practica2.
+    pageTable = new TranslationEntry[NumPhysPages];
     for (i = 0; i < numPages; i++) {
 	pageTable[i].virtualPage = i;	// for now, virtual page # = phys page #
 	pageTable[i].physicalPage = i;
-	pageTable[i].valid = TRUE;
+	//pageTable[i].valid = TRUE;
+    pageTable[i].valid = FALSE;
 	pageTable[i].use = FALSE;
 	pageTable[i].dirty = FALSE;
 	pageTable[i].readOnly = FALSE;  // if the code segment was entirely on 

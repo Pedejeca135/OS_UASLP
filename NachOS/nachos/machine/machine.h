@@ -32,7 +32,7 @@
 					// the disk sector size, for
 					// simplicity
 
-#define NumPhysPages    64
+#define NumPhysPages    32
 #define MemorySize 	(NumPhysPages * PageSize)
 #define TLBSize		4		// if there is a TLB, make it small
 
@@ -106,6 +106,7 @@ class Instruction {
 
 class Machine {
   public:
+
     Machine(bool debug);	// Initialize the simulation of the hardware
 				// for running user programs
     ~Machine();			// De-allocate the data structures
@@ -156,6 +157,8 @@ class Machine {
     char *mainMemory;		// physical memory to store user program,
 				// code and data, while executing
     int registers[NumTotalRegs]; // CPU registers, for executing user programs
+
+
 
 
 // NOTE: the hardware translation of virtual addresses in the user program
