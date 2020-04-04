@@ -40,19 +40,24 @@ StartProcess(char *filename)
     else
     {
 
-        printf("archivo %s creado. \n",filename);
+        //printf("archivo %s creado. \n",filename);
         swapOpenFile = fileSystem->Open(filename);
     }
 
     //Añadido practica1(END):-----------------------------------------------------------------------------------------------------------------------
 
     space = new AddrSpace(executable);    
+    //printf("fuera del constructor de AddrSpace\n");
     currentThread->space = space;
+    //printf("despues de spacce = space\n");
 
-    delete executable;			// close file
+    //delete executable;			// close file
+    //printf("delete executable\n");
 
     space->InitRegisters();		// set the initial register values
+    //printf("despues de init InitRegisters\n");
     space->RestoreState();		// load page table register
+    //printf("despues de RestoreState\n");
 
     machine->Run();			// jump to the user progam
     

@@ -59,11 +59,12 @@ ExceptionHandler(ExceptionType which)
     } else {
     	if(which == PageFaultException)
     	{
-    		machine->Run();
+    		//machine->Run();
     	}
     	else
     	{
     		printf("Unexpected user mode exception %d %d\n", which, type);
+
 			ASSERT(FALSE);
     	}
 

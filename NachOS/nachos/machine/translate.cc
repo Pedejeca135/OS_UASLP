@@ -35,6 +35,15 @@
 #include "system.h"
 #include "stdio.h"//para poder usar printf("");.
 
+
+
+//List * fifo = new List();
+int fifoArr[NumPhysPages];
+int cont = 0;
+List * relojAux = new List();
+
+int victimaAux = 0;
+
 // Routines for converting Words and Short Words to and from the
 // simulated machine's format of little endian.  These end up
 // being NOPs when the host machine is also little endian (DEC and Intel).
@@ -203,16 +212,18 @@ Machine::Translate(int virtAddr, int* physAddr, int size, bool writing)
     // we must have either a TLB or a page table, but not both!
     ASSERT(tlb == NULL || pageTable == NULL);	
     ASSERT(tlb != NULL || pageTable != NULL);	
+    
+
 
 // calculate the virtual page number, and offset within the page,
 // from the virtual address
-    printf("\n::TRANS:: \n");
-    printf("direccion virtual: %d\n",virtAddr );
-    printf("tamaño de pagina: %d\n",PageSize );
+ //   printf("\n::TRANS:: \n");
+// printf("direccion virtual: %d\n",virtAddr );
+  //  printf("tamaño de pagina: %d\n",PageSize );
     vpn = (unsigned) virtAddr / PageSize;
-    printf("vpn calculado: %d\n",vpn);
+  //  printf("vpn calculado: %d\n",vpn);
     offset = (unsigned) virtAddr % PageSize;
-    printf("offset calculado: %d\n",offset);
+  //  printf("offset calculado: %d\n",offset);
 
     
     if (tlb == NULL) {		// => page table => vpn is index into table
@@ -223,11 +234,27 @@ Machine::Translate(int virtAddr, int* physAddr, int size, bool writing)
 	} else if (!pageTable[vpn].valid) 
 
     {
+
 	    DEBUG('a', "virtual page # %d too large for page table size %d!\n", 
 			virtAddr, pageTableSize);
-        printf("\nFallo # %d\n", stats->numPageFaults + 1);
 
-//swapFile->ReadAt(&(machine->mainMemory[numFrames*PageSize]),PageSize,vpn*PageSize);
+        printf("\n\n Fallo # %d\n", stats->numPageFaults + 1);
+
+        if(!strcmp(comando,"-F")||!strcmp(comando,"-C"))
+        {         
+          printf("vpn calculado: %d\n",vpn);
+        }  
+        else if(!strcmp(comando,"-R"))
+        {
+              printf("\n::TRANS:: \n");
+              printf("direccion virtual: %d\n",virtAddr );
+              printf("tamaño de pagina: %d\n",PageSize );
+              printf("vpn calculado: %d\n",vpn);
+              printf("offset calculado: %d\n",offset);
+        }
+
+/*
+//swapOpenFile->ReadAt(&(machine->mainMemory[numFrames*PageSize]),PageSize,vpn*PageSize);
         //currentThread->space->swapIn(&(machine->mainMemory[numFrames*PageSize]),PageSize,vpn*PageSize);
         currentThread->space->swapIn(vpn);
          
@@ -239,9 +266,79 @@ Machine::Translate(int virtAddr, int* physAddr, int size, bool writing)
         
 
         stats->numPageFaults++;
+        //stats->numDiskReads++;
         
 
 	    return PageFaultException;
+
+*/
+
+        stats->numPageFaults++; //aumenta el numero de fallos de pagina
+        stats->numDiskReads++;  //aumenta el numero lecturas en el disco
+        
+        if(numFrame < NumPhysPages)
+        { //Verifica que haya paginas disponibles
+        pageTable[vpn].valid = TRUE; //valida la pagina
+        pageTable[vpn].physicalPage = numFrame; //asigna la pagina 
+        printf("numero de pagina fisica %d\n",numFrame);
+        
+
+        //(fifo)->Append((void*)vpn);//agrega a la lista de fifo el vpn nuevo
+        //fifo->Append((void*)vpn);//agrega a la lista de fifo el vpn nuevo
+        fifoArr[cont] = vpn;
+        cont++;
+        numFrame++;//aumenta el numero de la pagina en la que se encuentra
+        
+
+        swapOpenFile->ReadAt(&(machine->mainMemory[pageTable[vpn].physicalPage*PageSize]),PageSize,vpn*PageSize); //ingresa la pagina nueva
+        return PageFaultException;
+
+        }        ///// FIFO /////
+        else if(!strcmp(algoritmo,"-fifo"))
+        {
+
+
+if(cont  >= NumPhysPages)
+{
+    cont = 0;
+}
+            printf("Entra fifo\n");
+
+            //victima = (unsigned int)fifo->SortedRemove(NULL);//Remove(); //Saca el primer elemento de la lista y lo asigna como victima
+            victima = fifoArr[cont];
+            printf("la victima es %d\n", pageTable[victima].physicalPage);
+
+ //Verifica si ya fue utilizado y si es verdadero escribe en memoria
+
+            if(pageTable[victima].dirty == TRUE)
+            {
+                swapOpenFile->WriteAt(&(machine->mainMemory[pageTable[victima].physicalPage*PageSize]),PageSize,victima*PageSize); //escribe en la memoria remplazando a la pagina victima con la nueva
+                stats->numDiskWrites++; //aumenta el numero es escrituras en el disco
+            }
+
+            printf("numero de pagina fisica %d\n\n", pageTable[victima].physicalPage);
+            pageTable[victima].valid = FALSE; //hace invalida la página 
+            pageTable[vpn].physicalPage = pageTable[victima].physicalPage; //Asigna la página que es la victima a la nueva
+            pageTable[vpn].valid = TRUE; //Valida la página de entrada
+                    
+           
+            swapOpenFile->ReadAt(&(machine->mainMemory[pageTable[vpn].physicalPage*PageSize]),PageSize,vpn*PageSize); //ingresa la pagina nueva en memoria
+            //printf("almenos paso una vez\n");
+            printf("antes del append:\n");
+            fifoArr[cont] = vpn;
+            cont++ ;
+            //fifo->Append((void*)vpn);//agrega a la lista de fifo el vpn nuevo
+             // printf("almenos paso una vez\n");
+            /////Reloj/////
+        }
+        /*else if(!strcmp(algoritmo,"-reloj")){
+        victimaReloj(vpn); //funcion de reloj
+        swapOpenFile->ReadAt(&(machine->mainMemory[pageTable[vpn].physicalPage*PageSize]),PageSize,vpn*PageSize); //ingresa la pagina nueva a memoria
+        fifo->Append((void*)vpn);//agrega a la lista de fifo el vpn nuevo
+       }*/
+        
+
+
 	}
 	entry = &pageTable[vpn];
     } else {
@@ -275,8 +372,42 @@ Machine::Translate(int virtAddr, int* physAddr, int size, bool writing)
 	entry->dirty = TRUE;
     *physAddr = pageFrame * PageSize + offset;
     //agregado para imprimir datos(Practica0).
+    if(!strcmp(comando,"-M"))
+    {
     printf("\t  %d      \t      %d      \t      %d     \t       %d \t\n",virtAddr,pageFrame,offset,*physAddr);
+    }
+
     ASSERT((*physAddr >= 0) && ((*physAddr + size) <= MemorySize));
     DEBUG('a', "phys addr = 0x%x\n", *physAddr);
     return NoException;
 }
+
+/*
+/// Funcion de algoritmo reloj ///
+void Machine::victimaReloj(unsigned int pag){
+    do{ //Ciclo donde se busca la victima
+        victima = (unsigned int)fifo->Remove(); //Asigna la posible victima sacando de la lista el primer elemento
+        if(findVictimaB == FALSE){ //verifica si la victima ya fue encontrada
+            if(pageTable[victima].use == FALSE){ //Verifica si el bit de referencia esta en 0
+                pageTable[pag].valid = TRUE;//valida la página
+                    pageTable[pag].physicalPage = pageTable[victima].physicalPage;  //asigna la pagina fisica de la victima a la nueva pagina   
+                pageTable[victima].valid = FALSE;//invalida la pagina de la victima
+        //Verifica si ya fue utilizado y si es verdadero escribe en memoria
+                if(pageTable[victima].dirty == TRUE){
+                    swapOpenFile->WriteAt(&(machine->mainMemory[pageTable[victima].physicalPage*PageSize]),PageSize,victima*PageSize);//escribe en la memoria remplazando a la pagina victima con la nueva
+                    stats->numDiskWrites++;//aumenta las escrituras en el disco
+                }
+                findVictimaB = TRUE;//Encontro la victima se pone en true para que pueda salir del ciclo
+            }
+            else{ //si el bit de referencia es 1
+
+                pageTable[victima].use = FALSE;//pone el bit de referencia en 0
+                fifo->Append((void*)victima);//agrega al final de la lista el primero elemento que teniamos
+            }
+        }
+    }while(findVictimaB == FALSE);//Mientras no se encuentre al victima no sale del ciclo
+    
+    findVictimaB = FALSE;//Dejamos en falso para la siguiente vez que ingrese al algoritmo
+
+}
+*/

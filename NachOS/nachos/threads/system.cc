@@ -19,11 +19,15 @@ Statistics *stats;			// performance metrics
 Timer *timer;				// the hardware timer device,
 					// for invoking context switches
 
+char *comando;
+char *algoritmo;
+
 #ifdef FILESYS_NEEDED
 FileSystem  *fileSystem;
 //añadido en la practica1:-------
 OpenFile *swapOpenFile;
 //-------------------------------
+
 #endif
 
 #ifdef FILESYS

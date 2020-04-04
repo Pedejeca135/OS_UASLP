@@ -61,6 +61,7 @@ extern void Print(char *file), PerformanceTest(void);
 extern void StartProcess(char *file), ConsoleTest(char *in, char *out);
 extern void MailTest(int networkID);
 
+
 //----------------------------------------------------------------------
 // main
 // 	Bootstrap the operating system kernel.  
@@ -92,6 +93,36 @@ main(int argc, char **argv)
 	argCount = 1;
         if (!strcmp(*argv, "-z"))               // print copyright
             printf (copyright);
+
+
+
+printf("\n\n");
+		if(!strcmp(*(argv+2),"-C")){
+			comando = "-C";
+			printf(">> C\n");
+		}
+		else if(!strcmp(*(argv+2),"-M")){
+			comando = "-M";
+			printf(">> M\n");
+                }
+  		else if(!strcmp(*(argv+2),"-F")){
+			comando = "-F";
+			printf(">> F\n");
+		}else if(!strcmp(*(argv+2),"R")){
+			comando = "-R";
+			printf(">> R\n");
+		}
+  printf("-------------------------\n");
+		if(!strcmp(*(argv+3),"-fifo")){
+			algoritmo = "-fifo";
+			printf(">> Algoritmo FIFO\n");
+		}else if(!strcmp(*(argv+3),"-reloj")){
+			algoritmo = "-reloj";
+			printf(">> Algoritmo RELOJ\n");
+		}	
+	  
+
+
 #ifdef USER_PROGRAM
         if (!strcmp(*argv, "-x")) {        	// run a user program
 	    ASSERT(argc > 1);

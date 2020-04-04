@@ -76,6 +76,7 @@ List::~List()
 void
 List::Append(void *item)
 {
+    printf("to bien");
     ListElement *element = new ListElement(item, 0);
 
     if (IsEmpty()) {		// list is empty
@@ -87,6 +88,14 @@ List::Append(void *item)
     }
 }
 
+/*
+ListElement::ListElement(void *itemPtr, int sortKey)
+{
+     item = itemPtr;
+     key = sortKey;
+     next = NULL;   // assume we'll put it at the end of the list 
+}
+*/
 //----------------------------------------------------------------------
 // List::Prepend
 //      Put an "item" on the front of the list.
@@ -224,14 +233,24 @@ List::SortedRemove(int *keyPtr)
 	return NULL;
 
     thing = first->item;
-    if (first == last) {	// list had one item, now has none 
+
+    if (first == last) 
+    {	// list had one item, now has none 
         first = NULL;
-	last = NULL;
-    } else {
+	    last = NULL;
+    } 
+    else 
+    {
         first = element->next;
     }
+
+
+
+
+    
     if (keyPtr != NULL)
         *keyPtr = element->key;
+
     delete element;
     return thing;
 }

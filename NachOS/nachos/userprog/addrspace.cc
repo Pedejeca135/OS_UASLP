@@ -59,11 +59,7 @@ SwapHeader (NoffHeader *noffH)
 
 
 /**********************************************
-Practica 1.
-Integrantes:
 * Cantú Olivares Pedro de Jesús.
-* Puente Villanueva Juan Arturo.
-* Silva David.
 ***********************************************/
 
 
@@ -104,14 +100,15 @@ AddrSpace::AddrSpace(OpenFile *executable)
 			+ UserStackSize;	// we need to increase the size
 						// to leave room for the stack
     numPages = divRoundUp(size, PageSize);
-
+if(!strcmp(comando,"-C")||!strcmp(comando,"-F")|| !strcmp(comando,"-R"))
+{
     //imprimir el tamaño de proceso(Practica0).
     printf("\nEl tamano del proceso es: %d bytes\n",size);
     size = numPages * PageSize;
 
     //imrimir la cantidad de marcosw necesarios para el proceso(Practica0).
     printf("\nLa cantidad de marcos que requiere para ejecutarse son: %d \n",numPages);
-
+}
 /* Practica 2: No se necesita checar que el numero de paginas
 sea menor o igual a le de los marcos puesto que es paginacion
 por demanda pura(se comento el ASSERT()*/
@@ -120,15 +117,26 @@ por demanda pura(se comento el ASSERT()*/
 						// at least until we have
 						// virtual memory
 
-    DEBUG('a', "Initializing address space, num pages %d, size %d\n", 
-					numPages, size);
+    //DEBUG('a', "Initializing address space, num pages %d, size %d\n", 
+					//numPages, size);
 // first, set up the translation 
     //imprimir el esqueleto de la tabla(Practica0).
+    if(!strcmp(comando,"-R") )
     printf("Indice \t No. Marco \t Bit Validez\n");
     
     //pageTable = new TranslationEntry[numPages]; //comentado para la practica2.
     pageTable = new TranslationEntry[NumPhysPages];
-    for (i = 0; i < numPages; i++) {
+    if(pageTable != NULL)
+{
+    //printf("en AddrSpacepageTable != NULL\n");
+}
+else
+{
+    printf("en AddrSpace pageTable = NULL\n");
+}
+    for (i = 0; i < NumPhysPages; i++) 
+    {
+        //printf("pageTable. numPages: %d\n",numPages );
 	pageTable[i].virtualPage = i;	// for now, virtual page # = phys page #
 	//pageTable[i].physicalPage = i;
 	//pageTable[i].valid = TRUE;
@@ -139,29 +147,50 @@ por demanda pura(se comento el ASSERT()*/
 					// a separate page, we could set its 
 					// pages to be read-only
     //imprimir datos que se listan en el esqueleto de la tabla.(Practica0).
-    printf("%d              %d              %d \n",i,pageTable[i].physicalPage,pageTable[i].valid);
+   // printf("%d              %d              %d \n",i,pageTable[i].physicalPage,pageTable[i].valid);
+      if(pageTable == NULL)
+{
+    printf("en AddrSpace pageTable = NULL\n");
+}
     }
     //imprimir (Practica0).
+    if(!strcmp(comando,"-M") || !strcmp(comando,"-R") )
+    {
     printf("\nMapeo de direcciones logicas\n");
     printf("Dirección logica \t No.Marco(p) \t Desplazamiento(d) \t Dirección Fisica\t\n");
-
+}
 // zero out the entire address space, to zero the unitialized data segment 
 // and the stack segment
-    bzero(machine->mainMemory, size);
+    // printf("bzero1/2\n");
+    //bzero(machine->mainMemory, size);
+    //printf("bzero 2/2\n");
 
+if(pageTable != NULL)
+{
+    //printf("en AddrSpacepageTable != NULL\n");
+}
+else
+{
+    printf("en AddrSpace pageTable = NULL\n");
+}
+/*
 // then, copy in the code and data segments into memory
     if (noffH.code.size > 0) {
         DEBUG('a', "Initializing code segment, at 0x%x, size %d\n", 
 			noffH.code.virtualAddr, noffH.code.size);
-        executable->ReadAt(&(machine->mainMemory[noffH.code.virtualAddr]),
-			noffH.code.size, noffH.code.inFileAddr);
+        //executable->ReadAt(&(machine->mainMemory[noffH.code.virtualAddr]),
+			//noffH.code.size, noffH.code.inFileAddr);
     }
     if (noffH.initData.size > 0) {
         DEBUG('a', "Initializing data segment, at 0x%x, size %d\n", 
 			noffH.initData.virtualAddr, noffH.initData.size);
-        executable->ReadAt(&(machine->mainMemory[noffH.initData.virtualAddr]),
-			noffH.initData.size, noffH.initData.inFileAddr);
+        //executable->ReadAt(&(machine->mainMemory[noffH.initData.virtualAddr]),
+			//noffH.initData.size, noffH.initData.inFileAddr);
     }
+    */
+    
+    //printf("se acabo el constructor de AddrSpace");
+
 
 }
 

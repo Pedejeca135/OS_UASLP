@@ -32,7 +32,7 @@
 					// the disk sector size, for
 					// simplicity
 
-#define NumPhysPages    32
+#define NumPhysPages    4
 #define MemorySize 	(NumPhysPages * PageSize)
 #define TLBSize		4		// if there is a TLB, make it small
 
@@ -147,6 +147,7 @@ class Machine {
     void Debugger();		// invoke the user program debugger
     void DumpState();		// print the user CPU and memory state 
 
+void victimaReloj(unsigned int pag);//Funcion para reloj
 
 // Data structures -- all of these are accessible to Nachos kernel code.
 // "public" for convenience.
@@ -158,7 +159,13 @@ class Machine {
 				// code and data, while executing
     int registers[NumTotalRegs]; // CPU registers, for executing user programs
 
+  //Implementación Memoria Virtual
+    int numFrame = 0;
+    bool findVictimaB = FALSE; 
+    bool terminoLista = FALSE; 
 
+    unsigned int victima = 0;
+    int indice = 0;
 
 
 // NOTE: the hardware translation of virtual addresses in the user program

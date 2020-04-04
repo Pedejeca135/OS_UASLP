@@ -1,0 +1,319 @@
+
+
+>> C
+-------------------------
+>> Algoritmo FIFO
+archivo ../test/matmult.swp creado. 
+
+El tamano del proceso es: 6880 bytes
+
+La cantidad de marcos que requiere para ejecutarse son: 54 
+en AddrSpacepageTable != NULL
+pageTable. numPages: 54
+0              0              0 
+pageTable. numPages: 54
+1              0              0 
+pageTable. numPages: 54
+2              0              0 
+pageTable. numPages: 54
+3              0              0 
+pageTable. numPages: 54
+4              0              0 
+pageTable. numPages: 54
+5              0              0 
+pageTable. numPages: 54
+6              0              0 
+pageTable. numPages: 54
+7              0              0 
+pageTable. numPages: 54
+8              0              0 
+pageTable. numPages: 54
+9              0              0 
+pageTable. numPages: 54
+10              0              0 
+pageTable. numPages: 54
+11              0              0 
+pageTable. numPages: 54
+12              0              0 
+pageTable. numPages: 54
+13              0              0 
+pageTable. numPages: 54
+14              0              0 
+pageTable. numPages: 54
+15              0              0 
+pageTable. numPages: 54
+16              0              0 
+pageTable. numPages: 54
+17              0              0 
+pageTable. numPages: 54
+18              0              0 
+pageTable. numPages: 54
+19              0              0 
+pageTable. numPages: 54
+20              0              0 
+pageTable. numPages: 54
+21              0              0 
+pageTable. numPages: 54
+22              0              0 
+pageTable. numPages: 54
+23              0              0 
+pageTable. numPages: 54
+24              0              0 
+pageTable. numPages: 54
+25              0              0 
+pageTable. numPages: 54
+26              0              0 
+pageTable. numPages: 54
+27              0              0 
+pageTable. numPages: 54
+28              0              0 
+pageTable. numPages: 54
+29              0              0 
+pageTable. numPages: 54
+30              0              0 
+pageTable. numPages: 54
+31              0              0 
+en AddrSpacepageTable != NULL
+se acabo el constructor de AddrSpacefuera del constructor de AddrSpace
+despues de spacce = space
+delete executable
+despues de init InitRegisters
+despues de RestoreState
+
+Fallo # 1
+vpn calculado: 0
+
+Fallo # 2
+vpn calculado: 1
+
+Fallo # 3
+vpn calculado: 53
+
+Fallo # 4
+vpn calculado: 2
+
+Fallo # 5
+vpn calculado: 8
+
+Fallo # 6
+vpn calculado: 3
+
+Fallo # 7
+vpn calculado: 20
+
+Fallo # 8
+vpn calculado: 33
+
+Fallo # 9
+vpn calculado: 53
+
+Fallo # 10
+vpn calculado: 4
+
+Fallo # 11
+vpn calculado: 21
+
+Fallo # 12
+vpn calculado: 9
+
+Fallo # 13
+vpn calculado: 34
+
+Fallo # 14
+vpn calculado: 22
+
+Fallo # 15
+vpn calculado: 10
+
+Fallo # 16
+vpn calculado: 35
+
+Fallo # 17
+vpn calculado: 23
+
+Fallo # 18
+vpn calculado: 11
+
+Fallo # 19
+vpn calculado: 36
+Unexpected user mode exception 3 4608
+
+
+>> C
+-------------------------
+>> Algoritmo FIFO
+archivo ../test/sort.swp creado. 
+
+El tamano del proceso es: 5920 bytes
+
+La cantidad de marcos que requiere para ejecutarse son: 47 
+en AddrSpacepageTable != NULL
+pageTable. numPages: 47
+0              0              0 
+pageTable. numPages: 47
+1              0              0 
+pageTable. numPages: 47
+2              0              0 
+pageTable. numPages: 47
+3              0              0 
+pageTable. numPages: 47
+4              0              0 
+pageTable. numPages: 47
+5              0              0 
+pageTable. numPages: 47
+6              0              0 
+pageTable. numPages: 47
+7              0              0 
+pageTable. numPages: 47
+8              0              0 
+pageTable. numPages: 47
+9              0              0 
+pageTable. numPages: 47
+10              0              0 
+pageTable. numPages: 47
+11              0              0 
+pageTable. numPages: 47
+12              0              0 
+pageTable. numPages: 47
+13              0              0 
+pageTable. numPages: 47
+14              0              0 
+pageTable. numPages: 47
+15              0              0 
+pageTable. numPages: 47
+16              0              0 
+pageTable. numPages: 47
+17              0              0 
+pageTable. numPages: 47
+18              0              0 
+pageTable. numPages: 47
+19              0              0 
+pageTable. numPages: 47
+20              0              0 
+pageTable. numPages: 47
+21              0              0 
+pageTable. numPages: 47
+22              0              0 
+pageTable. numPages: 47
+23              0              0 
+pageTable. numPages: 47
+24              0              0 
+pageTable. numPages: 47
+25              0              0 
+pageTable. numPages: 47
+26              0              0 
+pageTable. numPages: 47
+27              0              0 
+pageTable. numPages: 47
+28              0              0 
+pageTable. numPages: 47
+29              0              0 
+pageTable. numPages: 47
+30              0              0 
+pageTable. numPages: 47
+31              0              0 
+en AddrSpacepageTable != NULL
+se acabo el constructor de AddrSpacefuera del constructor de AddrSpace
+despues de spacce = space
+delete executable
+despues de init InitRegisters
+despues de RestoreState
+
+Fallo # 1
+vpn calculado: 0
+
+Fallo # 2
+vpn calculado: 1
+
+Fallo # 3
+vpn calculado: 46
+
+Fallo # 4
+vpn calculado: 2
+
+Fallo # 5
+vpn calculado: 6
+
+Fallo # 6
+vpn calculado: 46
+
+Fallo # 7
+vpn calculado: 7
+
+Fallo # 8
+vpn calculado: 8
+
+Fallo # 9
+vpn calculado: 9
+
+Fallo # 10
+vpn calculado: 10
+
+Fallo # 11
+vpn calculado: 11
+
+Fallo # 12
+vpn calculado: 12
+
+Fallo # 13
+vpn calculado: 13
+
+Fallo # 14
+vpn calculado: 14
+
+Fallo # 15
+vpn calculado: 15
+
+Fallo # 16
+vpn calculado: 16
+
+Fallo # 17
+vpn calculado: 17
+
+Fallo # 18
+vpn calculado: 18
+
+Fallo # 19
+vpn calculado: 19
+
+Fallo # 20
+vpn calculado: 20
+
+Fallo # 21
+vpn calculado: 21
+
+Fallo # 22
+vpn calculado: 22
+
+Fallo # 23
+vpn calculado: 23
+
+Fallo # 24
+vpn calculado: 24
+
+Fallo # 25
+vpn calculado: 25
+
+Fallo # 26
+vpn calculado: 26
+
+Fallo # 27
+vpn calculado: 27
+
+Fallo # 28
+vpn calculado: 28
+
+Fallo # 29
+vpn calculado: 29
+
+Fallo # 30
+vpn calculado: 30
+
+Fallo # 31
+vpn calculado: 31
+
+Fallo # 32
+vpn calculado: 32
+
+Fallo # 33
+vpn calculado: 33
